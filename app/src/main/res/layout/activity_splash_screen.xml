@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/splash_bg"
+    tools:context=".SplashScreen">
+
+  <View
+      android:id="@+id/rectangle_2"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#5E1D2335"
+      />
+
+<!--  <ImageView-->
+<!--      android:id="@+id/splashlogo"-->
+<!--      android:layout_width="121dp"-->
+<!--      android:layout_height="132.03dp"-->
+<!--      android:layout_centerInParent="true"-->
+<!--      android:layout_alignParentTop="true"-->
+<!--      android:layout_marginTop="259dp"-->
+<!--      android:background="@drawable/splash_logo"-->
+<!--      />-->
+  <TextView
+      android:id="@+id/ordinary_co"
+      android:layout_width="279dp"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:layout_alignParentTop="true"
+      android:layout_marginTop="460dp"
+      android:gravity="center_horizontal|top"
+      android:text="Ordinary Coffee House"
+      android:textAppearance="@style/ordinary_co"
+      android:textFontWeight="500"
+  />
+
+
+  <com.airbnb.lottie.LottieAnimationView
+      android:layout_width="121dp"
+      android:layout_height="132.03dp"
+      android:layout_centerInParent="true"
+      android:layout_alignParentTop="true"
+      android:layout_marginTop="190dp"
+      app:lottie_autoPlay="true"
+      android:id="@+id/animation_splash"
+      android:elevation="5dp"
+      app:lottie_rawRes="@raw/animation_lk9st6ry"
+      />
+
+</RelativeLayout>

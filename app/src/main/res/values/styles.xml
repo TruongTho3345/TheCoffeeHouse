@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ordinary_co">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#FFFAF6</item>
+    </style>
+    <style name="good_morning">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#D8D8D8</item>
+    </style>
+    <style name="Theme.RemoveSplashScreenTheme" parent="@style/Base.Theme.TheCoffeeHouse">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+</resources>

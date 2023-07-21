@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/cafe_to_choose"
+    android:layout_marginBottom="13dp"
+    android:orientation="vertical"
+    app:cardUseCompatPadding="true">
+
+    <ImageView
+        android:id="@+id/coffeeImg"
+        android:layout_width="95dp"
+        android:layout_height="95dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/coffee_americano" />
+
+    <TextView
+        android:id="@+id/coffeeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="14sp"
+        android:textColor="#001833"
+        android:text="Americano" />
+</LinearLayout>
