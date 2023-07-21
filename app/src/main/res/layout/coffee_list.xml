@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/cafe_to_choose"
     android:layout_marginBottom="13dp"
+    android:foreground="@drawable/ripple_effect_rectangle"
     android:orientation="vertical"
     app:cardUseCompatPadding="true">
 
