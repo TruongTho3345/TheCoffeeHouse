@@ -1,4 +1,4 @@
-package com.example.thecoffeehouse;
+package com.example.thecoffeehouse.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,45 +11,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+
+import com.example.thecoffeehouse.models.Coffee;
+import com.example.thecoffeehouse.models.Constants;
+import com.example.thecoffeehouse.models.Cups;
+import com.example.thecoffeehouse.adapters.CupsAdapter;
+import com.example.thecoffeehouse.R;
+import com.example.thecoffeehouse.activities.CoffeeDetails;
+import com.example.thecoffeehouse.adapters.CoffeeAdapter;
 
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements CoffeeAdapter.OnClickListener {
-    private String param1;
-    private String param2;
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            param1 = getArguments().getString("param1");
-            param2 = getArguments().getString("param2");
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragments
         return inflater.inflate(R.layout.fragment_home, container, false);
-    }
-
-    public static HomeFragment newInstance(String param1,
-                                            String param2)
-    {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString("param1", param1);
-        args.putString("param2", param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState)
-    {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // getting the lists
         ArrayList<Cups> cupsList = Constants.getCupsData();
@@ -73,16 +59,13 @@ public class HomeFragment extends Fragment implements CoffeeAdapter.OnClickListe
         // Set OnClickListener to handle coffee item click events
         coffeeAdapter.setOnClickListener(this);
 
-/*        coffeeAdapter.setOnClickListener(new CoffeeAdapter.OnClickListener() {
+        ImageButton myCartButton = view.findViewById(R.id.myCart);
+        myCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(int position, Coffee coffeePosition) {
-                Intent intent = new Intent();
-                // Passing the data to the
-                // EmployeeDetails Activity
-                intent.putExtra("coffee_details_screen", coffeePosition);
-                startActivity(intent);
+            public void onClick(View view) {
+//                navigateToMyCartFragment();
             }
-        });*/
+        });
 
     }
 
@@ -94,4 +77,8 @@ public class HomeFragment extends Fragment implements CoffeeAdapter.OnClickListe
         intent.putExtra("coffee_details_screen", coffeePosition);
         startActivity(intent);
     }
+
+/*    private void navigateToMyCartFragment() {
+        Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_myCartFragment);
+    }*/
 }

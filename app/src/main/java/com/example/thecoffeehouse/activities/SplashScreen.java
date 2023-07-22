@@ -1,4 +1,4 @@
-package com.example.thecoffeehouse;
+package com.example.thecoffeehouse.activities;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,10 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.thecoffeehouse.R;
+import com.example.thecoffeehouse.activities.MainActivity;
 
 public class SplashScreen extends AppCompatActivity {
 

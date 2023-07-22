@@ -1,15 +1,15 @@
-package com.example.thecoffeehouse;
+package com.example.thecoffeehouse.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 
+import com.example.thecoffeehouse.fragments.BillFragment;
+import com.example.thecoffeehouse.fragments.GiftFragment;
+import com.example.thecoffeehouse.fragments.HomeFragment;
+import com.example.thecoffeehouse.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {

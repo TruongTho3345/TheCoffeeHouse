@@ -1,4 +1,4 @@
-package com.example.thecoffeehouse;
+package com.example.thecoffeehouse.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.thecoffeehouse.models.Cups;
+import com.example.thecoffeehouse.R;
 
 import java.util.ArrayList;
 
@@ -22,7 +25,7 @@ public class CupsAdapter extends RecyclerView.Adapter<CupsAdapter.MyViewHolder>{
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate the layout for each item and return a new ViewHolder object
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cups_list, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cups_item, parent, false);
         return new MyViewHolder(itemView);
     }
 

@@ -1,22 +1,32 @@
-package com.example.thecoffeehouse;
+package com.example.thecoffeehouse.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.thecoffeehouse.AppDatabase;
+import com.example.thecoffeehouse.entities.CartItem;
+import com.example.thecoffeehouse.models.Coffee;
+import com.example.thecoffeehouse.R;
 
 public class CoffeeDetails extends AppCompatActivity {
+    private AppDatabase appDatabase;
     private int numberOfItems = 1; // The default number of coffee items
+    private int temp = 1; //0: hot, 1: cold
+    private int iced = 1; //0: less, 1: normal, 2: full
     private double pricePerCoffee = 3.00;
     private double priceShot = 0.00;
 
     private double priceSize = 0.00;
+    private double totalPricePerItem = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +39,14 @@ public class CoffeeDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        ImageButton myCartButton = findViewById(R.id.myCart);
+        myCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                navigateToMyCartFragment();
             }
         });
 
@@ -110,6 +128,7 @@ public class CoffeeDetails extends AppCompatActivity {
                 cold.setImageResource(R.drawable.select_cold);
                 cold.setColorFilter(ContextCompat.getColor(CoffeeDetails.this, R.color.chooseButton), PorterDuff.Mode.SRC_IN);
 
+                temp = 0;
             }
         });
 
@@ -122,6 +141,7 @@ public class CoffeeDetails extends AppCompatActivity {
                 hot.setImageResource(R.drawable.select_hot);
                 hot.setColorFilter(ContextCompat.getColor(CoffeeDetails.this, R.color.chooseButton), PorterDuff.Mode.SRC_IN);
 
+                temp = 1;
             }
         });
 
@@ -188,6 +208,8 @@ public class CoffeeDetails extends AppCompatActivity {
                 noneIceTextView.setBackgroundTintList(ContextCompat.getColorStateList(CoffeeDetails.this, R.color.chooseButton));
                 normalIceTextView.setBackgroundTintList(null);
                 fullIceTextView.setBackgroundTintList(null);
+
+                iced = 0;
             }
         });
         normalIceTextView.setOnClickListener(new View.OnClickListener() {
@@ -196,6 +218,8 @@ public class CoffeeDetails extends AppCompatActivity {
                 normalIceTextView.setBackgroundTintList(ContextCompat.getColorStateList(CoffeeDetails.this, R.color.chooseButton));
                 noneIceTextView.setBackgroundTintList(null);
                 fullIceTextView.setBackgroundTintList(null);
+
+                iced = 1;
             }
         });
         fullIceTextView.setOnClickListener(new View.OnClickListener() {
@@ -204,6 +228,20 @@ public class CoffeeDetails extends AppCompatActivity {
                 fullIceTextView.setBackgroundTintList(ContextCompat.getColorStateList(CoffeeDetails.this, R.color.chooseButton));
                 noneIceTextView.setBackgroundTintList(null);
                 normalIceTextView.setBackgroundTintList(null);
+
+                iced = 2;
+            }
+        });
+
+        // Initialize the Room Database instance
+        appDatabase = AppDatabase.getInstance(this);
+
+        TextView addToCart = findViewById(R.id.coffeeDetails_addToCart);
+        addToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Call the addToCart method to add the selected coffee to the cart
+                addToCart(coffeePosition, numberOfItems);
             }
         });
 
@@ -223,11 +261,76 @@ public class CoffeeDetails extends AppCompatActivity {
         calculateTotalPrice();
     }
 
+//    private void navigateToMyCartFragment() {
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//        navController.navigate(R.id.action_coffeeDetails_to_myCartFragment);
+//    }
+
     private void calculateTotalPrice() {
         double totalPrice = (pricePerCoffee + priceShot + priceSize) * numberOfItems;
-
+        totalPricePerItem = totalPrice;
         TextView totalPriceTextView = findViewById(R.id.coffeeDetails_price);
-        totalPriceTextView.setText(String.format("%.2f", totalPrice));
+        totalPriceTextView.setText("$" + String.format("%.2f", totalPrice));
+    }
+
+    @Override
+    protected void onDestroy() {
+        AppDatabase.destroyInstance();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Close the Room Database properly
+        AppDatabase.destroyInstance();
+    }
+
+    // ... (your existing code)
+
+    private void addToCart(Coffee selectedCoffee, int quantity) {
+        // Get the selected customization details
+        String shot = (priceShot == 0.00) ? "single" : "double";
+        String tempCoffee = (temp == 0) ? "hot" : "cold";
+        String size;
+        if (priceSize == 0.00) {
+            size = "small";
+        } else if (priceSize == 0.50) {
+            size = "medium";
+        } else {
+            size = "large";
+        }
+        String iceLevel;
+        if (iced == 0){
+            iceLevel = "none ice";
+        } else if (iced == 1){
+            iceLevel = "normal ice";
+        } else {
+            iceLevel = "full ice";
+        }
+
+        // Create a new cart item with the selected coffee details and quantity
+        CartItem cartItem = new CartItem(0, 0, "coffeeName",
+                "shot", "temp", "size", "icedLevel", 0, 0.00);
+        cartItem.setCoffeeImg(selectedCoffee.getCoffeeImgId());
+        cartItem.setCoffeeName(selectedCoffee.getCoffeeName());
+        cartItem.setShot(shot);
+        cartItem.setTemp(tempCoffee);
+        cartItem.setSize(size);
+        cartItem.setIceLevel(iceLevel);
+        cartItem.setQuantity(quantity);
+        cartItem.setPrice(totalPricePerItem);
+
+        // Save the cart item to the Room Database
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.cartItemDao().insertCartItem(cartItem);
+            }
+        }).start();
+
+        // Optionally, you can display a message indicating the item has been added to the cart.
+        Toast.makeText(this, "Item added to cart", Toast.LENGTH_SHORT).show();
     }
 
 }
