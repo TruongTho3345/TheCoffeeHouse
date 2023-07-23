@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.thecoffeehouse.fragments.BillFragment;
+import com.example.thecoffeehouse.fragments.EditDialogFragment;
 import com.example.thecoffeehouse.fragments.GiftFragment;
 import com.example.thecoffeehouse.fragments.HomeFragment;
 import com.example.thecoffeehouse.R;
@@ -16,6 +17,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
+    public interface EditDialogListener {
+        void onDialogPositiveClick(String field, String editedText);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setSelectedItemId(R.id.home_nav);
         bottomNavigationView.setVisibility(View.VISIBLE);
     }
-
 
     HomeFragment homeFragment = new HomeFragment();
     GiftFragment giftFragment = new GiftFragment();

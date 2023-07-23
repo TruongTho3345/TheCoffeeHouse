@@ -1,6 +1,8 @@
-package com.example.thecoffeehouse.models;
+package com.example.thecoffeehouse;
 
 import com.example.thecoffeehouse.R;
+import com.example.thecoffeehouse.models.Coffee;
+import com.example.thecoffeehouse.models.Cups;
 
 import java.util.ArrayList;
 
