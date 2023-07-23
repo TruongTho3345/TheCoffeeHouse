@@ -1,5 +1,6 @@
 package com.example.thecoffeehouse.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,11 +15,18 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.thecoffeehouse.AppDatabase;
 import com.example.thecoffeehouse.R;
 import com.example.thecoffeehouse.activities.MainActivity;
+import com.example.thecoffeehouse.entities.ProfileEntity;
+
+import java.util.List;
+
+import kotlinx.coroutines.Dispatchers;
+import kotlinx.coroutines.GlobalScope;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements EditDialogFragment.OnTextEditedListener {
 
     TextView profileNameTextView;
     TextView profileEmailTextView;
@@ -36,8 +44,63 @@ public class ProfileFragment extends Fragment {
         profilePhoneTextView = view.findViewById(R.id.profilePhone);
         profileAddressTextView = view.findViewById(R.id.profileAddress);
 
+        new LoadProfileDataAsyncTask().execute();
+
         return view;
     }
+
+    @Override
+    public void onTextEdited(String field, String editedText) {
+        requireActivity().runOnUiThread(() -> {
+            if ("name".equals(field)) {
+                profileNameTextView.setText(editedText);
+            } else if ("email".equals(field)) {
+                profileEmailTextView.setText(editedText);
+            } else if ("phone".equals(field)) {
+                profilePhoneTextView.setText(editedText);
+            } else if ("address".equals(field)) {
+                profileAddressTextView.setText(editedText);
+            }
+        });
+
+        new Thread(() -> {
+            AppDatabase database = AppDatabase.getInstance(requireContext());
+            ProfileEntity profileEntity = new ProfileEntity(field, editedText);
+            database.profileDao().insertProfile(profileEntity);
+        }).start();
+    }
+
+    private class LoadProfileDataAsyncTask extends AsyncTask<Void, Void, List<ProfileEntity>> {
+
+        @Override
+        protected List<ProfileEntity> doInBackground(Void... voids) {
+            AppDatabase database = AppDatabase.getInstance(requireContext());
+            return database.profileDao().getAllProfiles();
+        }
+
+        @Override
+        protected void onPostExecute(List<ProfileEntity> profileEntities) {
+            super.onPostExecute(profileEntities);
+            if (profileEntities != null && !profileEntities.isEmpty()) {
+                for (ProfileEntity entity : profileEntities) {
+                    String field = entity.getField();
+                    String editedText = entity.getEditedText();
+
+                    if ("name".equals(field)) {
+                        profileNameTextView.setText(editedText);
+                    } else if ("email".equals(field)) {
+                        profileEmailTextView.setText(editedText);
+                    } else if ("phone".equals(field)) {
+                        profilePhoneTextView.setText(editedText);
+                    } else if ("address".equals(field)) {
+                        profileAddressTextView.setText(editedText);
+                    }
+                }
+            }
+        }
+    }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -124,6 +187,15 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase database = AppDatabase.getInstance(requireContext());
+                ProfileEntity profileEntity = new ProfileEntity(field, editedText);
+                database.profileDao().insertProfile(profileEntity);
+            }
+        }).start();
     }
 
 }
