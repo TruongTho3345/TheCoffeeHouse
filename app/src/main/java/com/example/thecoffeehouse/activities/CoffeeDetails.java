@@ -2,6 +2,9 @@ package com.example.thecoffeehouse.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.thecoffeehouse.AppDatabase;
 import com.example.thecoffeehouse.entities.CartItem;
+import com.example.thecoffeehouse.fragments.MyCartFragment;
 import com.example.thecoffeehouse.models.Coffee;
 import com.example.thecoffeehouse.R;
 
@@ -46,7 +50,7 @@ public class CoffeeDetails extends AppCompatActivity {
         myCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                navigateToMyCartFragment();
+                navigateToMyCartFragment();
             }
         });
 
@@ -261,10 +265,26 @@ public class CoffeeDetails extends AppCompatActivity {
         calculateTotalPrice();
     }
 
-//    private void navigateToMyCartFragment() {
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        navController.navigate(R.id.action_coffeeDetails_to_myCartFragment);
-//    }
+
+    private void navigateToMyCartFragment() {
+        // Disable clicks on CoffeeDetails before navigating to MyCartFragment
+        setClickableState(false);
+
+        // Create a new instance of MyCartFragment
+        MyCartFragment myCartFragment = new MyCartFragment();
+
+        // Set the flag indicating the source of navigation
+        Bundle args = new Bundle();
+        args.putString("source", "CoffeeDetailsActivity");
+        myCartFragment.setArguments(args);
+
+        // Add the fragment to the container with a transaction
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.clCoffeeDetails, myCartFragment)
+                .addToBackStack(null) // Add to back stack so the previous fragment is restored when back button is pressed
+                .commit();
+
+    }
 
     private void calculateTotalPrice() {
         double totalPrice = (pricePerCoffee + priceShot + priceSize) * numberOfItems;
@@ -286,7 +306,14 @@ public class CoffeeDetails extends AppCompatActivity {
         AppDatabase.destroyInstance();
     }
 
-    // ... (your existing code)
+    @Override
+    public void onBackPressed() {
+        // Re-enable clicks on CoffeeDetails when coming back from MyCartFragment
+        setClickableState(true);
+        super.onBackPressed();
+    }
+
+
 
     private void addToCart(Coffee selectedCoffee, int quantity) {
         // Get the selected customization details
@@ -331,6 +358,22 @@ public class CoffeeDetails extends AppCompatActivity {
 
         // Optionally, you can display a message indicating the item has been added to the cart.
         Toast.makeText(this, "Item added to cart", Toast.LENGTH_SHORT).show();
+    }
+
+    private void setClickableState(boolean clickable) {
+        findViewById(R.id.minusIcon).setEnabled(clickable);
+        findViewById(R.id.plusIcon).setEnabled(clickable);
+        findViewById(R.id.coffeeDetails_singleShot).setEnabled(clickable);
+        findViewById(R.id.coffeeDetails_doubleShot).setEnabled(clickable);
+        findViewById(R.id.coffeeDetails_hot).setEnabled(clickable);
+        findViewById(R.id.coffeeDetails_cold).setEnabled(clickable);
+        findViewById(R.id.coffeeDetails_small).setEnabled(clickable);
+        findViewById(R.id.coffeeDetails_medium).setEnabled(clickable);
+        findViewById(R.id.coffeeDetails_large).setEnabled(clickable);
+        findViewById(R.id.coffeeDetails_noneIce).setEnabled(clickable);
+        findViewById(R.id.coffeeDetails_normalIce).setEnabled(clickable);
+        findViewById(R.id.coffeeDetails_fullIce).setEnabled(clickable);
+        findViewById(R.id.coffeeDetails_addToCart).setEnabled(clickable);
     }
 
 }

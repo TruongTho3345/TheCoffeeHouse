@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/flMyCart"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.MyCartFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/myCartFrame"/>
 
     <RelativeLayout
         android:id="@+id/myCart_relativeLayout1"
@@ -19,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.026">
 
-        <Button
+        <ImageButton
             android:id="@+id/backButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -60,70 +67,77 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         app:layout_constraintTop_toBottomOf="@id/myCart_relativeLayout2"
-        app:layout_constraintStart_toStartOf="@id/myCart_relativeLayout2"/>
+        app:layout_constraintStart_toStartOf="@id/myCart_relativeLayout2"
+        app:layout_constraintEnd_toEndOf="@id/myCart_relativeLayout2"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:weightSum="2"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginBottom="32dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
         app:layout_constraintStart_toStartOf="@id/myCart_relativeLayout2"
         app:layout_constraintBottom_toBottomOf="parent">
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:gravity="center"
-                android:text="Total Price"
-                android:textSize="12sp"
-                android:textColor="#38001833"
-                android:fontFamily="@font/poppins_regular"
-                />
-            <TextView
-                android:id="@+id/myCart_totalPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_alignParentBottom="true"
-                android:gravity="center"
-                android:text="$9.00"
-                android:textSize="20sp"
-                android:letterSpacing="-0.01"
-                android:textColor="#001833"
-                android:fontFamily="@font/poppins_regular"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="20dp">
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:gravity="center"
+                    android:text="Total Price"
+                    android:textSize="12sp"
+                    android:textColor="#38001833"
+                    android:fontFamily="@font/poppins_regular"
+                    />
+                <TextView
+                    android:id="@+id/myCart_totalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:letterSpacing="-0.01"
+                    android:textColor="#001833"
+                    android:fontFamily="@font/poppins_regular"/>
 
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/myCart_checkoutBtn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:backgroundTint="#324A59"
-            android:background="@drawable/rounded_rectangle"
-            android:layout_weight="1">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/buy"
-                android:backgroundTint="@color/white"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="29dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginEnd="29dp"
-                android:text="Checkout"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:fontFamily="@font/poppins_regular"/>
-        </RelativeLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/myCart_checkoutBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="#324A59"
+                android:background="@drawable/rounded_rectangle"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buy"
+                    android:backgroundTint="@color/white"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="29dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginEnd="29dp"
+                    android:text="Checkout"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/poppins_regular"/>
+            </RelativeLayout>
 
+        </LinearLayout>
     </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

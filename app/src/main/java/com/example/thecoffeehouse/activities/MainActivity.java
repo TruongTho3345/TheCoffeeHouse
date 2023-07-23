@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.thecoffeehouse.fragments.BillFragment;
 import com.example.thecoffeehouse.fragments.GiftFragment;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView
                 .setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.home_nav);
+        bottomNavigationView.setVisibility(View.VISIBLE);
     }
 
 
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         .commit();
                 return true;
         }
+
         else return false;
     }
 }

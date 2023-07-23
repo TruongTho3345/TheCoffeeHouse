@@ -6,6 +6,7 @@
     android:weightSum="4"
     android:layout_marginHorizontal="24dp"
     android:paddingHorizontal="10dp"
+    android:layout_marginVertical="10dp"
     android:background="@drawable/rounded_rectangle"
     android:backgroundTint="@color/chooseButton">
     <ImageView
@@ -13,8 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_gravity="center"
-        android:background="@drawable/coffee_americano"/>
+        android:layout_gravity="center"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"

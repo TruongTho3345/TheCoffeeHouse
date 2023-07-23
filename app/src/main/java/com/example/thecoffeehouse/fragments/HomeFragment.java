@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +22,7 @@ import com.example.thecoffeehouse.adapters.CupsAdapter;
 import com.example.thecoffeehouse.R;
 import com.example.thecoffeehouse.activities.CoffeeDetails;
 import com.example.thecoffeehouse.adapters.CoffeeAdapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
@@ -63,7 +66,16 @@ public class HomeFragment extends Fragment implements CoffeeAdapter.OnClickListe
         myCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                navigateToMyCartFragment();
+                MyCartFragment myCartFragment = new MyCartFragment();
+
+                // Replace HomeFragment with MyCartFragment
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flFragment, myCartFragment)
+                        .addToBackStack(null)
+                        .commit();
+                BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.setVisibility(View.GONE);
             }
         });
 
@@ -78,7 +90,4 @@ public class HomeFragment extends Fragment implements CoffeeAdapter.OnClickListe
         startActivity(intent);
     }
 
-/*    private void navigateToMyCartFragment() {
-        Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_myCartFragment);
-    }*/
 }

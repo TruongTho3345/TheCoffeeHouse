@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.OrderConfirmationFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/order_constraintLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+            <ImageView
+                android:id="@+id/order_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/take_away_1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView
+                android:id="@+id/orderSuccess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order Success"
+                android:textSize="22sp"
+                android:textColor="#181D2D"
+                android:fontFamily="@font/poppins_regular"
+                android:textStyle="bold"
+                android:paddingVertical="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/order_img" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your order has been placed successfully.\nFor more details, go to my orders."
+                android:textSize="14sp"
+                android:textColor="#AAAAAA"
+                android:fontFamily="@font/poppins_regular"
+                android:textStyle="bold"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/orderSuccess"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:layout_width="315.75dp"
+            android:layout_height="46dp"
+            android:text="Track My Order"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_alignBottom="@id/order_constraintLayout"
+            android:layout_marginBottom="-192dp"
+            android:backgroundTint="#324A59"
+            />
+    </RelativeLayout>
+
+</FrameLayout>
