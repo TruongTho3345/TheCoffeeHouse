@@ -94,6 +94,8 @@ public class MyCartFragment extends Fragment implements MyCartAdapter.CartItemDe
                 } else {
                     // Default behavior - Go back to the previous fragment
                     requireActivity().getSupportFragmentManager().popBackStack();
+                    BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+                    bottomNavigationView.setVisibility(View.VISIBLE);
                 }
             }
         });

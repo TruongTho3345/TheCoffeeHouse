@@ -19,6 +19,7 @@ import com.example.thecoffeehouse.AppDatabase;
 import com.example.thecoffeehouse.R;
 import com.example.thecoffeehouse.activities.MainActivity;
 import com.example.thecoffeehouse.entities.ProfileEntity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -111,6 +112,8 @@ public class ProfileFragment extends Fragment implements EditDialogFragment.OnTe
             @Override
             public void onClick(View view) {
                     requireActivity().getSupportFragmentManager().popBackStack();
+                    BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+                    bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
 
