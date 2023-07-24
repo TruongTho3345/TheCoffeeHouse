@@ -1,5 +1,6 @@
 package com.example.thecoffeehouse.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,13 +29,21 @@ import android.widget.TextView;
 
 import com.example.thecoffeehouse.AppDatabase;
 import com.example.thecoffeehouse.R;
+import com.example.thecoffeehouse.SharedViewModel;
 import com.example.thecoffeehouse.adapters.MyCartAdapter;
 import com.example.thecoffeehouse.entities.CartItem;
+import com.example.thecoffeehouse.entities.Order;
+import com.example.thecoffeehouse.entities.ProfileEntity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MyCartFragment extends Fragment implements MyCartAdapter.CartItemDeletedListener{
 
@@ -41,6 +51,43 @@ public class MyCartFragment extends Fragment implements MyCartAdapter.CartItemDe
     MyCartAdapter myCartAdapter;
     RecyclerView recyclerView;
     private ItemTouchHelper itemTouchHelper;
+
+    private SharedViewModel sharedViewModel;
+
+    interface AddressCallback {
+        void onAddressReceived(String address);
+    }
+
+    private void getAddressWithLargestId(AddressCallback callback) {
+        // Use AtomicInteger to store the largest ID
+        AtomicInteger largestId = new AtomicInteger(-1);
+        // Use AtomicReference to store the largest address
+        AtomicReference<String> largestIdAddress = new AtomicReference<>(null);
+
+        // Perform the Room database query on a background thread
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                List<ProfileEntity> profiles = AppDatabase.getInstance(requireContext()).profileDao().getAllProfiles();
+
+                for (ProfileEntity profile : profiles) {
+                    if ("address".equals(profile.getField()) && profile.getId() > largestId.get()) {
+                        largestId.set(profile.getId());
+                        largestIdAddress.set(profile.getEditedText());
+                    }
+                }
+                callback.onAddressReceived(largestIdAddress.get());
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -134,7 +181,7 @@ public class MyCartFragment extends Fragment implements MyCartAdapter.CartItemDe
             @Override
             public void onClick(View v) {
                 // Display the OrderConfirmationFragment
-                OrderConfirmationFragment orderConfirmationFragment = new OrderConfirmationFragment();
+/*                OrderConfirmationFragment orderConfirmationFragment = new OrderConfirmationFragment();
 
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction()
@@ -142,7 +189,36 @@ public class MyCartFragment extends Fragment implements MyCartAdapter.CartItemDe
                         .addToBackStack(null)
                         .commit();
                 ConstraintLayout myCartFragment = requireActivity().findViewById(R.id.flMyCart);
-                myCartFragment.setVisibility(View.GONE);
+                myCartFragment.setVisibility(View.GONE);*/
+
+                // Get the list of cart items from the adapter
+                List<CartItem> cartItems = myCartAdapter.getCartItems();
+
+                // Get the current date as a string
+                String currentDate = getCurrentDateTime();
+
+                getAddressWithLargestId(new AddressCallback() {
+                    @Override
+                    public void onAddressReceived(String address) {
+                        // Save each cart item as a separate order to the database using a background thread
+                        new Thread(() -> {
+                            AppDatabase appDatabase = AppDatabase.getInstance(requireContext());
+
+                            Log.d("MyCartFragment", "Address in clicked: " + address);
+
+                            for (CartItem cartItem : cartItems) {
+                                // Create an Order instance with the current date, cart item price, and address
+                                Order order = new Order(currentDate, cartItem.getPrice(), address, cartItem.getCoffeeName());
+
+                                // Insert the order into the database
+                                appDatabase.orderDao().insertOrder(order);
+                            }
+
+                            // After saving the orders, delete all cart items from the database
+                            appDatabase.cartItemDao().deleteAllCartItems();
+                        }).start();
+                    }
+                });
             }
         });
     }
@@ -176,11 +252,12 @@ public class MyCartFragment extends Fragment implements MyCartAdapter.CartItemDe
         totalPriceTextView.setText("$" + String.format("%.2f", totalPrice));
     }
 
-    // New method to update the adapter with new data
-    private void updateCartData(List<CartItem> data) {
-        if (myCartAdapter != null) {
-            myCartAdapter.updateData(data);
-        }
+
+    private String getCurrentDateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("d MMMM | hh:mm a", Locale.getDefault());
+        return sdf.format(new Date());
     }
+
+
 
 }

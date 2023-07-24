@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.thecoffeehouse.fragments.BillFragment;
-import com.example.thecoffeehouse.fragments.EditDialogFragment;
+import com.example.thecoffeehouse.fragments.MyOrderFragment;
 import com.example.thecoffeehouse.fragments.GiftFragment;
 import com.example.thecoffeehouse.fragments.HomeFragment;
 import com.example.thecoffeehouse.R;
@@ -30,18 +29,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         bottomNavigationView
                 .setOnNavigationItemSelectedListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.home_nav);
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
         bottomNavigationView.setVisibility(View.VISIBLE);
     }
 
     HomeFragment homeFragment = new HomeFragment();
     GiftFragment giftFragment = new GiftFragment();
-    BillFragment billFragment = new BillFragment();
+    MyOrderFragment myOrderFragment = new MyOrderFragment();
 
     public boolean
     onNavigationItemSelected(@NonNull MenuItem item)
     {
-        if(item.getItemId() == R.id.home_nav) {
+        if(item.getItemId() == R.id.nav_home) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.flFragment, homeFragment)
@@ -56,10 +55,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             return true;
         }
 
-        else if (item.getItemId() == R.id.Bills){
+        else if (item.getItemId() == R.id.nav_myOrder){
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.flFragment, billFragment)
+                        .replace(R.id.flFragment, myOrderFragment)
                         .commit();
                 return true;
         }

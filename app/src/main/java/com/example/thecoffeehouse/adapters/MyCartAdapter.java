@@ -77,6 +77,10 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
         cartItemDeletedListener = listener;
     }
 
+    public List<CartItem> getCartItems() {
+        return cartItemList;
+    }
+
     public CartItem getItemAtPosition(int position) {
         if (position >= 0 && position < cartItemList.size()) {
             return cartItemList.get(position);

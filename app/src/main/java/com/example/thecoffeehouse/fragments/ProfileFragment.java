@@ -2,29 +2,24 @@ package com.example.thecoffeehouse.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
-import android.util.Log;
+import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.example.thecoffeehouse.AppDatabase;
 import com.example.thecoffeehouse.R;
-import com.example.thecoffeehouse.activities.MainActivity;
+import com.example.thecoffeehouse.SharedViewModel;
 import com.example.thecoffeehouse.entities.ProfileEntity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
-import kotlinx.coroutines.Dispatchers;
-import kotlinx.coroutines.GlobalScope;
 
 
 public class ProfileFragment extends Fragment implements EditDialogFragment.OnTextEditedListener {
@@ -32,7 +27,16 @@ public class ProfileFragment extends Fragment implements EditDialogFragment.OnTe
     TextView profileNameTextView;
     TextView profileEmailTextView;
     TextView profilePhoneTextView;
+
     TextView profileAddressTextView;
+
+    private SharedViewModel sharedViewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +48,13 @@ public class ProfileFragment extends Fragment implements EditDialogFragment.OnTe
         profileEmailTextView = view.findViewById(R.id.profileEmail);
         profilePhoneTextView = view.findViewById(R.id.profilePhone);
         profileAddressTextView = view.findViewById(R.id.profileAddress);
+
+        // Get the latest address from the SharedViewModel and set it to the TextView
+        String latestAddress = sharedViewModel.getLatestAddressLiveData().getValue();
+        if (latestAddress != null) {
+            profileAddressTextView.setText(latestAddress);
+        }
+
 
         new LoadProfileDataAsyncTask().execute();
 
@@ -61,8 +72,10 @@ public class ProfileFragment extends Fragment implements EditDialogFragment.OnTe
                 profilePhoneTextView.setText(editedText);
             } else if ("address".equals(field)) {
                 profileAddressTextView.setText(editedText);
+                sharedViewModel.setLatestAddress(editedText);
             }
         });
+
 
         new Thread(() -> {
             AppDatabase database = AppDatabase.getInstance(requireContext());
@@ -170,6 +183,7 @@ public class ProfileFragment extends Fragment implements EditDialogFragment.OnTe
             currentText = profileAddressTextView.getText().toString();
         }
 
+
         EditDialogFragment dialog = EditDialogFragment.newInstance(field, currentText);
         dialog.show(fragmentManager, "EditDialogFragment");
     }
@@ -200,5 +214,6 @@ public class ProfileFragment extends Fragment implements EditDialogFragment.OnTe
             }
         }).start();
     }
+
 
 }

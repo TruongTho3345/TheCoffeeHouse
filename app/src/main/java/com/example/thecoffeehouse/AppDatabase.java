@@ -7,15 +7,18 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.thecoffeehouse.dao.CartItemDao;
+import com.example.thecoffeehouse.dao.OrderDao;
 import com.example.thecoffeehouse.dao.ProfileDao;
 import com.example.thecoffeehouse.entities.CartItem;
+import com.example.thecoffeehouse.entities.Order;
 import com.example.thecoffeehouse.entities.ProfileEntity;
 
 // AppDatabase.java
-@Database(entities = {CartItem.class, ProfileEntity.class}, version = 2)
+@Database(entities = {CartItem.class, ProfileEntity.class, Order.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CartItemDao cartItemDao();
     public abstract ProfileDao profileDao();
+    public abstract OrderDao orderDao();
 
     // Singleton pattern to ensure only one instance of the database is created.
     private static volatile AppDatabase INSTANCE;
