@@ -40,6 +40,14 @@ public class OrderConfirmationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ImageButton backButton = view.findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().onBackPressed();
+            }
+        });
+
         Button trackOrderButton = view.findViewById(R.id.orderConfirmation_trackMyOrderButton);
         trackOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +61,8 @@ public class OrderConfirmationFragment extends Fragment {
                 fragmentTransaction.addToBackStack(null); // Add the transaction to the back stack
                 fragmentTransaction.commit();
 
+                BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
     }

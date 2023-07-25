@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -16,6 +17,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.thecoffeehouse.AppDatabase;
 import com.example.thecoffeehouse.R;
@@ -72,29 +76,18 @@ public class MyOrderFragment extends Fragment implements MyOrderAdapter.OnOrderC
         return rootView;
     }
 
-    private void updateAdaptersData(List<Order> orders) {
-        if (orders == null || orders.isEmpty()) {
-            // Handle the case when orders is null or empty
-            return;
-        }
-        List<Order> onGoingOrders = new ArrayList<>();
-        List<Order> historyOrders = new ArrayList<>();
-
-        // Separate orders into on-going and history based on the status
-        for (Order order : orders) {
-            if (order.getStatus() == Order.STATUS_ON_GOING) {
-                onGoingOrders.add(order);
-            } else if (order.getStatus() == Order.STATUS_HISTORY) {
-                historyOrders.add(order);
-            }
-        }
-        myOrderAdapterOnGoing.updateData(onGoingOrders);
-        myOrderAdapterHistory.updateData(historyOrders);
-    }
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        TextView onGoingText = view.findViewById(R.id.myOrder_onGoing_text);
+        TextView historyText = view.findViewById(R.id.myOrder_history_text);
+
+        Button onGoingBelowText = view.findViewById(R.id.myOrder_onGoing_belowText);
+        Button historyBelowText = view.findViewById(R.id.myOrder_history_belowText);
+
+        int chooseColor = ContextCompat.getColor(requireContext(), R.color.textColor);
+        int notChooseColor = ContextCompat.getColor(requireContext(), R.color.chooseButton);
 
         ConstraintLayout myOrderHistory = view.findViewById(R.id.myOrder_history);
         myOrderHistory.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +95,13 @@ public class MyOrderFragment extends Fragment implements MyOrderAdapter.OnOrderC
             public void onClick(View view) {
                 recyclerViewHistory.setVisibility(View.VISIBLE);
                 recyclerViewOnGoing.setVisibility(View.GONE);
+
+                historyText.setTextColor(chooseColor);
+                historyBelowText.setBackgroundColor(chooseColor);
+
+                onGoingText.setTextColor(notChooseColor);
+                onGoingBelowText.setBackgroundColor(notChooseColor);
+
             }
         });
 
@@ -111,6 +111,12 @@ public class MyOrderFragment extends Fragment implements MyOrderAdapter.OnOrderC
             public void onClick(View view) {
                 recyclerViewHistory.setVisibility(View.GONE);
                 recyclerViewOnGoing.setVisibility(View.VISIBLE);
+
+                onGoingText.setTextColor(chooseColor);
+                onGoingBelowText.setBackgroundColor(chooseColor);
+
+                historyText.setTextColor(notChooseColor);
+                historyBelowText.setBackgroundColor(notChooseColor);
             }
         });
 
@@ -140,6 +146,26 @@ public class MyOrderFragment extends Fragment implements MyOrderAdapter.OnOrderC
         });
 
         itemTouchHelper.attachToRecyclerView(recyclerViewOnGoing);
+    }
+
+    private void updateAdaptersData(List<Order> orders) {
+        if (orders == null || orders.isEmpty()) {
+            // Handle the case when orders is null or empty
+            return;
+        }
+        List<Order> onGoingOrders = new ArrayList<>();
+        List<Order> historyOrders = new ArrayList<>();
+
+        // Separate orders into on-going and history based on the status
+        for (Order order : orders) {
+            if (order.getStatus() == Order.STATUS_ON_GOING) {
+                onGoingOrders.add(order);
+            } else if (order.getStatus() == Order.STATUS_HISTORY) {
+                historyOrders.add(order);
+            }
+        }
+        myOrderAdapterOnGoing.updateData(onGoingOrders);
+        myOrderAdapterHistory.updateData(historyOrders);
     }
 
 

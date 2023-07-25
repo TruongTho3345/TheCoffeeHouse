@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="chooseButton">#d2d9d4</color>
+    <color name="textColor">#001833</color>
 </resources>

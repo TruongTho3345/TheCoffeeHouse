@@ -9,6 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/myOrder_title"
             android:layout_width="match_parent"
@@ -69,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:text="History"
                     android:textSize="14sp"
-                    android:textColor="#001833"
+                    android:textColor="#D8D8D8"
                     android:fontFamily="@font/poppins_regular"
                     android:textStyle="bold"
                     android:gravity="center"
@@ -80,7 +81,7 @@
                     android:id="@+id/myOrder_history_belowText"
                     android:layout_width="93dp"
                     android:layout_height="2dp"
-                    android:backgroundTint="#001833"
+                    android:backgroundTint="#D8D8D8"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
@@ -92,6 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="36dp"
+            android:layout_marginBottom="100dp"
             android:background="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/myOrder_nav"
@@ -101,6 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="36dp"
+            android:layout_marginBottom="100dp"
             android:background="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/myOrder_nav"
