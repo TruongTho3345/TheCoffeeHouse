@@ -21,11 +21,29 @@ public class Order {
     @ColumnInfo(name = "coffee_type") // Field for coffee type (coffee name)
     private String coffeeType;
 
+    @ColumnInfo(name = "status") // Field for order status (on-going or history)
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    // Define constants for status values
+    public static final int STATUS_ON_GOING = 1;
+    public static final int STATUS_HISTORY = 2;
+
     public Order(String date, double price, String address, String coffeeType) {
         this.date = date;
         this.price = price;
         this.address = address;
         this.coffeeType = coffeeType;
+
+        // Set the initial status to on-going (1)
+        this.status = STATUS_ON_GOING;
     }
 
     public int getId() {
