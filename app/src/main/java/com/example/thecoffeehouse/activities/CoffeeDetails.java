@@ -2,6 +2,7 @@ package com.example.thecoffeehouse.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -270,7 +271,7 @@ public class CoffeeDetails extends AppCompatActivity {
         // Disable clicks on CoffeeDetails before navigating to MyCartFragment
         setClickableState(false);
 
-        // Create a new instance of MyCartFragment
+
         MyCartFragment myCartFragment = new MyCartFragment();
 
         // Set the flag indicating the source of navigation
@@ -278,10 +279,12 @@ public class CoffeeDetails extends AppCompatActivity {
         args.putString("source", "CoffeeDetailsActivity");
         myCartFragment.setArguments(args);
 
-        // Add the fragment to the container with a transaction
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.clCoffeeDetails, myCartFragment)
-                .addToBackStack(null) // Add to back stack so the previous fragment is restored when back button is pressed
+
+        // Replace HomeFragment with MyCartFragment
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.flCoffeeDetails, myCartFragment)
+                .addToBackStack(null)
                 .commit();
 
     }

@@ -180,17 +180,6 @@ public class MyCartFragment extends Fragment implements MyCartAdapter.CartItemDe
         checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Display the OrderConfirmationFragment
-/*                OrderConfirmationFragment orderConfirmationFragment = new OrderConfirmationFragment();
-
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.flFragment, orderConfirmationFragment)
-                        .addToBackStack(null)
-                        .commit();
-                ConstraintLayout myCartFragment = requireActivity().findViewById(R.id.flMyCart);
-                myCartFragment.setVisibility(View.GONE);*/
-
                 // Get the list of cart items from the adapter
                 List<CartItem> cartItems = myCartAdapter.getCartItems();
 
@@ -203,38 +192,31 @@ public class MyCartFragment extends Fragment implements MyCartAdapter.CartItemDe
                         // Save each cart item as a separate order to the database using a background thread
                         new Thread(() -> {
                             AppDatabase appDatabase = AppDatabase.getInstance(requireContext());
-
-                            Log.d("MyCartFragment", "Address in clicked: " + address);
-
                             for (CartItem cartItem : cartItems) {
                                 // Create an Order instance with the current date, cart item price, and address
                                 Order order = new Order(currentDate, cartItem.getPrice(), address, cartItem.getCoffeeName());
-
                                 // Insert the order into the database
                                 appDatabase.orderDao().insertOrder(order);
                             }
-
                             // After saving the orders, delete all cart items from the database
                             appDatabase.cartItemDao().deleteAllCartItems();
                         }).start();
                     }
                 });
+
+                OrderConfirmationFragment orderConfirmationFragment = new OrderConfirmationFragment();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flMyCart, orderConfirmationFragment);
+                fragmentTransaction.addToBackStack(null); // Add the transaction to the back stack
+                fragmentTransaction.commit();
             }
         });
     }
 
     @Override
     public void onCartItemDeleted(int position) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                AppDatabase appDatabase = AppDatabase.getInstance(requireContext());
-                CartItem itemToDelete = myCartAdapter.getItemAtPosition(position);
-                // Delete the item from the Room database using DAO
-                appDatabase.cartItemDao().deleteCartItem(itemToDelete);
 
-            }
-        }).start();
     }
 
 

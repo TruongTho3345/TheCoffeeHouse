@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/flOrderConfirmation"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.OrderConfirmationFragment">
 
@@ -53,18 +54,18 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
+            android:id="@+id/orderConfirmation_trackMyOrderButton"
             android:layout_width="315.75dp"
             android:layout_height="46dp"
-            android:text="Track My Order"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins_regular"
-            android:gravity="center"
-            android:layout_centerInParent="true"
             android:layout_alignBottom="@id/order_constraintLayout"
+            android:layout_centerInParent="true"
             android:layout_marginBottom="-192dp"
             android:backgroundTint="#324A59"
-            />
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center"
+            android:text="Track My Order"
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
 </FrameLayout>
