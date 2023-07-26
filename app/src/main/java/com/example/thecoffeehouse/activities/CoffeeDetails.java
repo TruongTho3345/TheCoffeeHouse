@@ -1,13 +1,17 @@
 package com.example.thecoffeehouse.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,11 +22,16 @@ import android.widget.Toast;
 
 import com.example.thecoffeehouse.AppDatabase;
 import com.example.thecoffeehouse.entities.CartItem;
+import com.example.thecoffeehouse.fragments.GiftFragment;
+import com.example.thecoffeehouse.fragments.HomeFragment;
 import com.example.thecoffeehouse.fragments.MyCartFragment;
+import com.example.thecoffeehouse.fragments.MyOrderFragment;
+import com.example.thecoffeehouse.fragments.OrderConfirmationFragment;
 import com.example.thecoffeehouse.models.Coffee;
 import com.example.thecoffeehouse.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class CoffeeDetails extends AppCompatActivity {
+public class CoffeeDetails extends AppCompatActivity implements OrderConfirmationFragment.OnTrackOrderClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
     private AppDatabase appDatabase;
     private int numberOfItems = 1; // The default number of coffee items
     private int temp = 1; //0: hot, 1: cold
@@ -38,6 +47,9 @@ public class CoffeeDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coffee_details);
 
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView
+                .setOnNavigationItemSelectedListener(this);
 
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -377,6 +389,59 @@ public class CoffeeDetails extends AppCompatActivity {
         findViewById(R.id.coffeeDetails_normalIce).setEnabled(clickable);
         findViewById(R.id.coffeeDetails_fullIce).setEnabled(clickable);
         findViewById(R.id.coffeeDetails_addToCart).setEnabled(clickable);
+    }
+
+    BottomNavigationView bottomNavigationView;
+
+    HomeFragment homeFragment = new HomeFragment();
+    GiftFragment giftFragment = new GiftFragment();
+    MyOrderFragment myOrderFragment = new MyOrderFragment();
+
+    public boolean
+    onNavigationItemSelected(@NonNull MenuItem item)
+    {
+        Log.d("CoffeeDetails", "item selected: " + item.getItemId());
+        if(item.getItemId() == R.id.nav_home) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.flCoffeeDetails, homeFragment)
+                    .commit();
+            return true;
+        }
+        else if (item.getItemId() == R.id.Gifts) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.flCoffeeDetails, giftFragment)
+                    .commit();
+            return true;
+        }
+
+        else if (item.getItemId() == R.id.nav_myOrder){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.flCoffeeDetails, myOrderFragment)
+                    .commit();
+            return true;
+        }
+
+        else return true;
+    }
+
+    @Override
+    public void onTrackOrderClicked() {
+
+        setClickableState(false);
+
+        MyOrderFragment myOrderFragment = new MyOrderFragment();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.flCoffeeDetails, myOrderFragment)
+                .commit();
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        bottomNavigationView.setSelectedItemId(R.id.nav_myOrder);
+
+
     }
 
 }

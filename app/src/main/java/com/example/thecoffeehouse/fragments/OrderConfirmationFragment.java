@@ -1,5 +1,6 @@
 package com.example.thecoffeehouse.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,8 @@ import android.widget.RelativeLayout;
 
 import com.example.thecoffeehouse.AppDatabase;
 import com.example.thecoffeehouse.R;
+import com.example.thecoffeehouse.activities.CoffeeDetails;
+import com.example.thecoffeehouse.activities.MainActivity;
 import com.example.thecoffeehouse.entities.CartItem;
 import com.example.thecoffeehouse.entities.Order;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,6 +32,23 @@ import java.util.List;
 
 public class OrderConfirmationFragment extends Fragment {
 
+    public interface OnTrackOrderClickListener {
+        void onTrackOrderClicked();
+    }
+
+    private OnTrackOrderClickListener onTrackOrderClickListener;
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        // Check if the context (activity) implements the OnTrackOrderClickListener interface
+        if (context instanceof OnTrackOrderClickListener) {
+            onTrackOrderClickListener = (OnTrackOrderClickListener) context;
+        } else {
+            throw new ClassCastException(context.toString() + " must implement OnTrackOrderClickListener");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,19 +72,10 @@ public class OrderConfirmationFragment extends Fragment {
         trackOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Display the OrderConfirmationFragment
-                MyOrderFragment myOrderFragment = new MyOrderFragment();
-
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flOrderConfirmation, myOrderFragment);
-                fragmentTransaction.addToBackStack(null); // Add the transaction to the back stack
-                fragmentTransaction.commit();
-
-                BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
-                bottomNavigationView.setVisibility(View.VISIBLE);
+                onTrackOrderClickListener.onTrackOrderClicked();
             }
         });
+
     }
 
 }

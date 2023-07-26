@@ -26,6 +26,7 @@ import com.example.thecoffeehouse.R;
 import com.example.thecoffeehouse.adapters.MyOrderAdapter;
 import com.example.thecoffeehouse.entities.CartItem;
 import com.example.thecoffeehouse.entities.Order;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,6 +148,7 @@ public class MyOrderFragment extends Fragment implements MyOrderAdapter.OnOrderC
 
         itemTouchHelper.attachToRecyclerView(recyclerViewOnGoing);
     }
+
 
     private void updateAdaptersData(List<Order> orders) {
         if (orders == null || orders.isEmpty()) {
