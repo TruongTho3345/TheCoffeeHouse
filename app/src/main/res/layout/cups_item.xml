@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:src="@drawable/coffee_cup_1" />
+        android:backgroundTint="@color/chooseButton"
+        android:background="@drawable/coffee_cup_1" />
 
 </RelativeLayout>

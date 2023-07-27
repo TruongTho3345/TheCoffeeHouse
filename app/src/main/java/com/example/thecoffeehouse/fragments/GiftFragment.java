@@ -2,65 +2,41 @@ package com.example.thecoffeehouse.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.thecoffeehouse.Constants;
 import com.example.thecoffeehouse.R;
+import com.example.thecoffeehouse.adapters.CoffeeAdapter;
+import com.example.thecoffeehouse.models.Coffee;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GiftFragment#newInstance} factory method to
- * create an instance of this fragments.
- */
+import java.util.ArrayList;
+
 public class GiftFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragments initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public GiftFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragments using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragments GiftFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static GiftFragment newInstance(String param1, String param2) {
-        GiftFragment fragment = new GiftFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragments
         return inflater.inflate(R.layout.fragment_gift, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        LoyaltyCardFragment loyaltyCardFragment = new LoyaltyCardFragment();
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.homePage_linearLayout2, loyaltyCardFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

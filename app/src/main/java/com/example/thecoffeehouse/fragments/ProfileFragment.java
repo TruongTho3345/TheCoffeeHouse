@@ -61,6 +61,59 @@ public class ProfileFragment extends Fragment implements EditDialogFragment.OnTe
         return view;
     }
 
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ImageButton backButton = view.findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+                BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        ImageButton editNameButton = view.findViewById(R.id.editName);
+        ImageButton editEmailButton = view.findViewById(R.id.editEmail);
+        ImageButton editPhoneButton = view.findViewById(R.id.editPhone);
+        ImageButton editAddressButton = view.findViewById(R.id.editAddress);
+
+        editNameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the click event to open the edit dialog for the profile name
+                openEditDialog("name");
+            }
+        });
+
+        editEmailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the click event to open the edit dialog for the profile email
+                openEditDialog("email");
+            }
+        });
+
+        editPhoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the click event to open the edit dialog for the profile phone
+                openEditDialog("phone");
+            }
+        });
+
+        editAddressButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the click event to open the edit dialog for the profile address
+                openEditDialog("address");
+            }
+        });
+    }
+
     @Override
     public void onTextEdited(String field, String editedText) {
         requireActivity().runOnUiThread(() -> {
@@ -116,57 +169,6 @@ public class ProfileFragment extends Fragment implements EditDialogFragment.OnTe
 
 
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        ImageButton backButton = view.findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    requireActivity().getSupportFragmentManager().popBackStack();
-                    BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
-                    bottomNavigationView.setVisibility(View.VISIBLE);
-            }
-        });
-
-        ImageButton editNameButton = view.findViewById(R.id.editName);
-        ImageButton editEmailButton = view.findViewById(R.id.editEmail);
-        ImageButton editPhoneButton = view.findViewById(R.id.editPhone);
-        ImageButton editAddressButton = view.findViewById(R.id.editAddress);
-
-        editNameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle the click event to open the edit dialog for the profile name
-                openEditDialog("name");
-            }
-        });
-
-        editEmailButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle the click event to open the edit dialog for the profile email
-                openEditDialog("email");
-            }
-        });
-
-        editPhoneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle the click event to open the edit dialog for the profile phone
-                openEditDialog("phone");
-            }
-        });
-
-        editAddressButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle the click event to open the edit dialog for the profile address
-                openEditDialog("address");
-            }
-        });
-    }
 
     private void openEditDialog(String field) {
         FragmentManager fragmentManager = getChildFragmentManager();

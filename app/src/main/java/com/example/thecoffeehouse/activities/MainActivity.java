@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.thecoffeehouse.fragments.LoyaltyCardFragment;
 import com.example.thecoffeehouse.fragments.MyOrderFragment;
 import com.example.thecoffeehouse.fragments.GiftFragment;
 import com.example.thecoffeehouse.fragments.HomeFragment;
@@ -81,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     //Handle the click event of the "Track Order" button in OrderConfirmationFragment
     public void openMyOrderFragment() {
-        Log.d("MainActivity", "Parent calledddd");
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.flFragment, myOrderFragment)

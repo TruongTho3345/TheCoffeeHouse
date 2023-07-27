@@ -11,9 +11,7 @@ public class Cups implements Serializable {
         this.cupsResourceId = cupsResourceId;
     }
 
-    public int getCupsResourceId() {
-        return cupsResourceId;
-    }
+
 
     public void setCupsResourceId(int cupsResourceId) {
         this.cupsResourceId = cupsResourceId;

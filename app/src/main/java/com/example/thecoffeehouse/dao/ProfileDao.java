@@ -18,6 +18,9 @@ public interface ProfileDao {
     @Query("SELECT * FROM profile WHERE field = :field")
     ProfileEntity getProfile(String field);
 
+    @Query("SELECT edited_text FROM profile WHERE field = :field ORDER BY id DESC LIMIT 1;")
+    String getStringByField(String field);
+
     @Query("SELECT * FROM profile")
     List<ProfileEntity> getAllProfiles();
 }

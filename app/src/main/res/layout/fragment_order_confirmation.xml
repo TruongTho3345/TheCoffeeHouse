@@ -12,16 +12,6 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <ImageButton
-            android:layout_marginTop="15dp"
-            android:layout_marginHorizontal="30dp"
-            android:id="@+id/backButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentStart="true"
-            android:foreground="@drawable/ripple_effect_oval"
-            android:background="@drawable/arrow_back"/>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/order_constraintLayout"
             android:layout_width="wrap_content"

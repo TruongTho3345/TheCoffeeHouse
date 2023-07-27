@@ -15,6 +15,9 @@ public interface OrderDao {
     @Insert
     void insertOrder(Order order);
 
+    @Query("SELECT COUNT(*) FROM orders")
+    int getOrderSize();
+
     @Query("SELECT * FROM orders")
     LiveData<List<Order>> getAllOrdersLiveData();
 
