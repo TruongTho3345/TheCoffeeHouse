@@ -13,6 +13,7 @@ import com.example.thecoffeehouse.AppDatabase;
 import com.example.thecoffeehouse.R;
 import com.example.thecoffeehouse.entities.CartItem;
 import com.example.thecoffeehouse.entities.Order;
+import com.example.thecoffeehouse.entities.RewardPoints;
 
 import java.util.List;
 
@@ -104,6 +105,10 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.OrderVie
                 order.setStatus(Order.STATUS_HISTORY);
                 AppDatabase appDatabase = AppDatabase.getInstance(context);
                 appDatabase.orderDao().updateOrder(order);
+
+                RewardPoints rewardPoints = new RewardPoints(appDatabase.rewardPointsDao().getRewardPoints()
+                                        + order.getQuantity()*12);
+                appDatabase.rewardPointsDao().insertRewardPoints(rewardPoints);
             }
         }).start();
     }

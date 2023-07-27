@@ -14,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.thecoffeehouse.AppDatabase;
 import com.example.thecoffeehouse.R;
 import com.example.thecoffeehouse.adapters.HistoryRewardAdapter;
 import com.example.thecoffeehouse.entities.Order;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.w3c.dom.Text;
 
@@ -66,14 +68,31 @@ public class GiftFragment extends Fragment {
         new AsyncTask<Void, Void, Integer>() {
             @Override
             protected Integer doInBackground(Void... voids) {
-                return appDatabase.orderDao().getOrderSizeHistory();
+                return appDatabase.rewardPointsDao().getRewardPoints();
             }
             @Override
-            protected void onPostExecute(Integer orderSizeHistory) {
+            protected void onPostExecute(Integer totalRewardPoint) {
                 TextView point = view.findViewById(R.id.gift_myPoints);
-                point.setText(String.valueOf(orderSizeHistory * 12));
+                point.setText(String.valueOf(totalRewardPoint));
             }
         }.execute();
+
+        Button redeemBtn = view.findViewById(R.id.gift_redeemBtn);
+        redeemBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RedeemFragment redeemFragment = new RedeemFragment();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flGift, redeemFragment)
+                        .addToBackStack(null)
+                        .commit();
+                BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.setVisibility(View.GONE);
+            }
+        });
+
+
     }
 
     public static GiftFragment newInstance() {

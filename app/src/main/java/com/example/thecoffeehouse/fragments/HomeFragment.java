@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment implements CoffeeAdapter.OnClickListe
                 // Replace HomeFragment with MyCartFragment
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.flFragment, myCartFragment)
+                        .replace(R.id.flHomeFragment, myCartFragment)
                         .addToBackStack(null)
                         .commit();
                 BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
