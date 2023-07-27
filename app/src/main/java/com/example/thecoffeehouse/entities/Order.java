@@ -24,23 +24,20 @@ public class Order {
     @ColumnInfo(name = "status") // Field for order status (on-going or history)
     private int status;
 
-    public int getStatus() {
-        return status;
-    }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+    @ColumnInfo(name = "quantity") // Field for order status (on-going or history)
+    private int quantity;
 
     // Define constants for status values
     public static final int STATUS_ON_GOING = 1;
     public static final int STATUS_HISTORY = 2;
 
-    public Order(String date, double price, String address, String coffeeType) {
+    public Order(String date, double price, String address, String coffeeType, int quantity) {
         this.date = date;
         this.price = price;
         this.address = address;
         this.coffeeType = coffeeType;
+        this.quantity = quantity;
 
         // Set the initial status to on-going (1)
         this.status = STATUS_ON_GOING;
@@ -84,5 +81,22 @@ public class Order {
 
     public void setCoffeeType(String coffeeType) {
         this.coffeeType = coffeeType;
+    }
+
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

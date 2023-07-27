@@ -15,14 +15,22 @@ public interface OrderDao {
     @Insert
     void insertOrder(Order order);
 
-    @Query("SELECT COUNT(*) FROM orders")
+    @Query("SELECT SUM(quantity) FROM orders")
     int getOrderSize();
+
+    @Query("SELECT SUM(quantity) FROM orders WHERE status = 2")
+    int getOrderSizeHistory();
+
 
     @Query("SELECT * FROM orders")
     LiveData<List<Order>> getAllOrdersLiveData();
 
     @Update
     void updateOrder(Order order);
+
+    @Query("SELECT * FROM orders WHERE status = 2")
+    LiveData<List<Order>> getOrdersWithStatusHistoryLiveData();
+
 }
 
 

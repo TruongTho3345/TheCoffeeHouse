@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingVertical="16dp">
+    <RelativeLayout
+        android:id="@+id/giftItem_rl1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+            android:id="@+id/giftItem_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Americano"
+            android:textSize="12sp"
+            android:textColor="#324A59"
+            android:fontFamily="@font/poppins_regular"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"/>
+        <TextView
+            android:id="@+id/giftItem_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="24 June | 12:30 PM"
+            android:textSize="10sp"
+            android:textColor="#38324A59"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/giftItem_point"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="+ 12 Pts"
+        android:textSize="16sp"
+        android:textColor="#324A59"
+        android:fontFamily="@font/poppins_regular"
+        android:textStyle="bold"
+        android:gravity="center"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F4F5F7"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

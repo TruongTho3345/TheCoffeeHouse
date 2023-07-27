@@ -1,5 +1,6 @@
 package com.example.thecoffeehouse.adapters;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class CoffeeAdapter extends RecyclerView.Adapter<CoffeeAdapter.RecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Coffee coffeePosition = coffeeList.get(position);
         holder.coffeeText.setText(coffeePosition.getCoffeeName());
         holder.coffeeImg.setImageResource(coffeePosition.getCoffeeImgId());

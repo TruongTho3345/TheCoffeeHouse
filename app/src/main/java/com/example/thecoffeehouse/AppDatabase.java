@@ -14,7 +14,7 @@ import com.example.thecoffeehouse.entities.Order;
 import com.example.thecoffeehouse.entities.ProfileEntity;
 
 // AppDatabase.java
-@Database(entities = {CartItem.class, ProfileEntity.class, Order.class}, version = 4)
+@Database(entities = {CartItem.class, ProfileEntity.class, Order.class}, version = 5)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CartItemDao cartItemDao();
     public abstract ProfileDao profileDao();

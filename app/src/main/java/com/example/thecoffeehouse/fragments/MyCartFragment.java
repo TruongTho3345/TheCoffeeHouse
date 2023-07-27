@@ -194,7 +194,7 @@ public class MyCartFragment extends Fragment implements MyCartAdapter.CartItemDe
                             AppDatabase appDatabase = AppDatabase.getInstance(requireContext());
                             for (CartItem cartItem : cartItems) {
                                 // Create an Order instance with the current date, cart item price, and address
-                                Order order = new Order(currentDate, cartItem.getPrice(), address, cartItem.getCoffeeName());
+                                Order order = new Order(currentDate, cartItem.getPrice(), address, cartItem.getCoffeeName(), cartItem.getQuantity());
                                 // Insert the order into the database
                                 appDatabase.orderDao().insertOrder(order);
                             }

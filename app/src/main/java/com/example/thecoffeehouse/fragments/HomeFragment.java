@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
@@ -112,7 +113,7 @@ public class HomeFragment extends Fragment implements CoffeeAdapter.OnClickListe
 
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.flFragment, profileFragment)
+                        .replace(R.id.flHomeFragment, profileFragment)
                         .addToBackStack(null)
                         .commit();
                 BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);

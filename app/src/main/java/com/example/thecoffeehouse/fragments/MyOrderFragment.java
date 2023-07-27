@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.thecoffeehouse.AppDatabase;
 import com.example.thecoffeehouse.R;
+import com.example.thecoffeehouse.adapters.HistoryRewardAdapter;
 import com.example.thecoffeehouse.adapters.MyOrderAdapter;
 import com.example.thecoffeehouse.entities.CartItem;
 import com.example.thecoffeehouse.entities.Order;
@@ -37,7 +39,6 @@ public class MyOrderFragment extends Fragment implements MyOrderAdapter.OnOrderC
     private RecyclerView recyclerViewHistory;
     private MyOrderAdapter myOrderAdapterOnGoing;
     private MyOrderAdapter myOrderAdapterHistory;
-
     private ItemTouchHelper itemTouchHelper;
 
     @Override
@@ -63,7 +64,6 @@ public class MyOrderFragment extends Fragment implements MyOrderAdapter.OnOrderC
 
         recyclerViewHistory.setVisibility(View.GONE);
         recyclerViewOnGoing.setVisibility(View.VISIBLE);
-
 
         // Retrieve order items as LiveData from the Room Database
         AppDatabase appDatabase = AppDatabase.getInstance(requireContext());
