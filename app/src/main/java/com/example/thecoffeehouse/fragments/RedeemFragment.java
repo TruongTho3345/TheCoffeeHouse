@@ -1,10 +1,13 @@
 package com.example.thecoffeehouse.fragments;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 
 import android.os.Handler;
@@ -18,11 +21,54 @@ import android.widget.Toast;
 
 import com.example.thecoffeehouse.AppDatabase;
 import com.example.thecoffeehouse.R;
+import com.example.thecoffeehouse.activities.MainActivity;
 import com.example.thecoffeehouse.dao.RewardPointsDao;
+import com.example.thecoffeehouse.entities.CartItem;
+import com.example.thecoffeehouse.entities.Order;
+import com.example.thecoffeehouse.entities.ProfileEntity;
 import com.example.thecoffeehouse.entities.RewardPoints;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+
 public class RedeemFragment extends Fragment {
+
+    interface AddressCallback {
+        void onAddressReceived(String address);
+    }
+
+    private void getAddressWithLargestId(MyCartFragment.AddressCallback callback) {
+        // Use AtomicInteger to store the largest ID
+        AtomicInteger largestId = new AtomicInteger(-1);
+        // Use AtomicReference to store the largest address
+        AtomicReference<String> largestIdAddress = new AtomicReference<>(null);
+
+        // Perform the Room database query on a background thread
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                List<ProfileEntity> profiles = AppDatabase.getInstance(requireContext()).profileDao().getAllProfiles();
+
+                for (ProfileEntity profile : profiles) {
+                    if ("address".equals(profile.getField()) && profile.getId() > largestId.get()) {
+                        largestId.set(profile.getId());
+                        largestIdAddress.set(profile.getEditedText());
+                    }
+                }
+                callback.onAddressReceived(largestIdAddress.get());
+            }
+        });
+    }
+
+    private String getCurrentDateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("d MMMM | hh:mm a", Locale.getDefault());
+        return sdf.format(new Date());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,9 +83,14 @@ public class RedeemFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requireActivity().getSupportFragmentManager().popBackStack();
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flFragment, new GiftFragment())
+                        .commit();
+
                 BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
                 bottomNavigationView.setVisibility(View.VISIBLE);
+                bottomNavigationView.setSelectedItemId(R.id.Gifts);
             }
         });
 
@@ -64,6 +115,19 @@ public class RedeemFragment extends Fragment {
                     else {
                         RewardPoints rewardPoints = new RewardPoints(rewardPointsDao.getRewardPoints() - pointsToDeduct);
                         rewardPointsDao.insertRewardPoints(rewardPoints);
+
+                        getAddressWithLargestId(new MyCartFragment.AddressCallback() {
+                            @Override
+                            public void onAddressReceived(String address) {
+                                new Thread(() -> {
+                                    AppDatabase appDatabase = AppDatabase.getInstance(requireContext());
+                                    // Create an Order instance with the current date, cart item price, and address
+                                    Order order = new Order(getCurrentDateTime(), 0, address, "Cafe Latte", 1);
+                                    // Insert the order into the database
+                                    appDatabase.orderDao().insertOrder(order);
+                                }).start();
+                            }
+                        });
                     }
                 }).start();
 
@@ -87,6 +151,19 @@ public class RedeemFragment extends Fragment {
                     else {
                         RewardPoints rewardPoints = new RewardPoints(rewardPointsDao.getRewardPoints() - pointsToDeduct);
                         rewardPointsDao.insertRewardPoints(rewardPoints);
+
+                        getAddressWithLargestId(new MyCartFragment.AddressCallback() {
+                            @Override
+                            public void onAddressReceived(String address) {
+                                new Thread(() -> {
+                                    AppDatabase appDatabase = AppDatabase.getInstance(requireContext());
+                                    // Create an Order instance with the current date, cart item price, and address
+                                    Order order = new Order(getCurrentDateTime(), 0, address, "Flat White", 1);
+                                    // Insert the order into the database
+                                    appDatabase.orderDao().insertOrder(order);
+                                }).start();
+                            }
+                        });
                     }
                 }).start();
 
@@ -110,6 +187,19 @@ public class RedeemFragment extends Fragment {
                     else {
                         RewardPoints rewardPoints = new RewardPoints(rewardPointsDao.getRewardPoints() - pointsToDeduct);
                         rewardPointsDao.insertRewardPoints(rewardPoints);
+
+                        getAddressWithLargestId(new MyCartFragment.AddressCallback() {
+                            @Override
+                            public void onAddressReceived(String address) {
+                                new Thread(() -> {
+                                    AppDatabase appDatabase = AppDatabase.getInstance(requireContext());
+                                    // Create an Order instance with the current date, cart item price, and address
+                                    Order order = new Order(getCurrentDateTime(), 0, address, "Cappuccino", 1);
+                                    // Insert the order into the database
+                                    appDatabase.orderDao().insertOrder(order);
+                                }).start();
+                            }
+                        });
                     }
                 }).start();
 
