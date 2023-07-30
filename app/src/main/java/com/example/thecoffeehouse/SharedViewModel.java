@@ -14,13 +14,4 @@ public class SharedViewModel extends ViewModel {
         latestAddressLiveData.setValue(address);
     }
 
-    private MutableLiveData<String> profileNameLiveData = new MutableLiveData<>();
-
-    public void setProfileName(String name) {
-        profileNameLiveData.setValue(name);
-    }
-
-    public LiveData<String> getProfileNameLiveData() {
-        return profileNameLiveData;
-    }
 }

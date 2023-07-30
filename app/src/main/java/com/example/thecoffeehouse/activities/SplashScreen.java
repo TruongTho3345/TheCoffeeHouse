@@ -10,11 +10,10 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.thecoffeehouse.R;
-import com.example.thecoffeehouse.activities.MainActivity;
 
 public class SplashScreen extends AppCompatActivity {
 
-    TextView brandname;
+    TextView brandName;
     LottieAnimationView logo;
 
     @Override
@@ -22,10 +21,10 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        brandname = findViewById(R.id.ordinary_co);
+        brandName = findViewById(R.id.ordinary_co);
         logo = findViewById(R.id.animation_splash);
 
-        brandname.animate().translationY(-200).setDuration(2000).setStartDelay(0);
+        brandName.animate().translationY(-200).setDuration(2000).setStartDelay(0);
         logo.animate().translationY(200).setDuration(2000).setStartDelay(0);
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -1,5 +1,6 @@
 package com.example.thecoffeehouse.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,6 +52,7 @@ public class HomeFragment extends Fragment implements CoffeeAdapter.OnClickListe
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

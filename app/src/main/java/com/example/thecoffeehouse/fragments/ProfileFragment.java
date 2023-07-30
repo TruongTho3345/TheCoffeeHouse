@@ -167,9 +167,6 @@ public class ProfileFragment extends Fragment implements EditDialogFragment.OnTe
         }
     }
 
-
-
-
     private void openEditDialog(String field) {
         FragmentManager fragmentManager = getChildFragmentManager();
         String currentText = "";
@@ -189,33 +186,4 @@ public class ProfileFragment extends Fragment implements EditDialogFragment.OnTe
         EditDialogFragment dialog = EditDialogFragment.newInstance(field, currentText);
         dialog.show(fragmentManager, "EditDialogFragment");
     }
-
-    void updateProfileField(String field, String editedText) {
-        // Update the corresponding profile field with the edited text
-        requireActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if ("name".equals(field)) {
-                    profileNameTextView.setText(editedText);
-                } else if ("email".equals(field)) {
-                    profileEmailTextView.setText(editedText);
-                } else if ("phone".equals(field)) {
-                    profilePhoneTextView.setText(editedText);
-                } else if ("address".equals(field)) {
-                    profileAddressTextView.setText(editedText);
-                }
-            }
-        });
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                AppDatabase database = AppDatabase.getInstance(requireContext());
-                ProfileEntity profileEntity = new ProfileEntity(field, editedText);
-                database.profileDao().insertProfile(profileEntity);
-            }
-        }).start();
-    }
-
-
 }

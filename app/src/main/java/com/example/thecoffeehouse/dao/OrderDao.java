@@ -18,10 +18,6 @@ public interface OrderDao {
     @Query("SELECT SUM(quantity) FROM orders")
     int getOrderSize();
 
-    @Query("SELECT SUM(quantity) FROM orders WHERE status = 2")
-    LiveData<Integer> getTotalQuantityWithStatus2();
-
-
     @Query("SELECT * FROM orders")
     LiveData<List<Order>> getAllOrdersLiveData();
 

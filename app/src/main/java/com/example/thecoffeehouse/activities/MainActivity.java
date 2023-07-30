@@ -23,10 +23,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     BottomNavigationView bottomNavigationView;
 
-    public interface EditDialogListener {
-        void onDialogPositiveClick(String field, String editedText);
-    }
-
     @Override
     public void onTrackOrderClicked() {
         // This method will be called when the "Track Order" button is clicked in the OrderConfirmationFragment

@@ -29,22 +29,8 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.OrderVie
         this.orderList = orderList;
         this.onOrderClickListener = listener;
     }
-
-    public List<Order> getOrderList() {
-        return orderList;
-    }
-
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
-    }
-
     public interface OnOrderClickListener {
         void onOrderClicked(int position);
-    }
-
-    public void updateData(List<Order> orders) {
-        this.orderList = orders;
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -89,6 +75,11 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.OrderVie
         }
     }
 
+    public void updateData(List<Order> orders) {
+        this.orderList = orders;
+        notifyDataSetChanged();
+    }
+
     public void deleteItem(int position) {
         Order order = orderList.get(position);
         orderList.remove(position);
@@ -113,10 +104,4 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.OrderVie
         }).start();
     }
 
-    public Order getItemAtPosition(int position) {
-        if (position >= 0 && position < orderList.size()) {
-            return orderList.get(position);
-        }
-        return null;
-    }
 }

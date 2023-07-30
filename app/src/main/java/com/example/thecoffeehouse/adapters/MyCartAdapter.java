@@ -33,9 +33,6 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
         this.cartItemList = cartItemList;
     }
 
-    public MyCartAdapter(List<CartItem> cartItemList) {
-        this.cartItemList = cartItemList;
-    }
     @NonNull
     @Override
     public MyCartAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -73,10 +70,6 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
         }
     }
 
-    public void setCartItemDeletedListener(CartItemDeletedListener listener) {
-        cartItemDeletedListener = listener;
-    }
-
     public List<CartItem> getCartItems() {
         return cartItemList;
     }
@@ -92,12 +85,6 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
     public void updateData(List<CartItem> newData) {
         cartItemList.clear();
         cartItemList.addAll(newData);
-        notifyDataSetChanged();
-    }
-
-    // New method to clear all data from the adapter
-    public void clearData() {
-        cartItemList.clear();
         notifyDataSetChanged();
     }
 

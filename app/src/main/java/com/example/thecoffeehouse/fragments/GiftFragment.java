@@ -1,5 +1,6 @@
 package com.example.thecoffeehouse.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -46,6 +47,7 @@ public class GiftFragment extends Fragment {
         return rootView;
     }
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -95,11 +97,4 @@ public class GiftFragment extends Fragment {
 
     }
 
-    public static GiftFragment newInstance() {
-        return new GiftFragment();
-    }
-
-    public void updateHistoryRewardAdapter(List<Order> orders) {
-        historyRewardAdapter.updateData(orders);
-    }
 }

@@ -52,8 +52,6 @@ public class MyCartFragment extends Fragment implements MyCartAdapter.CartItemDe
     RecyclerView recyclerView;
     private ItemTouchHelper itemTouchHelper;
 
-    private SharedViewModel sharedViewModel;
-
     interface AddressCallback {
         void onAddressReceived(String address);
     }
@@ -86,7 +84,6 @@ public class MyCartFragment extends Fragment implements MyCartAdapter.CartItemDe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
